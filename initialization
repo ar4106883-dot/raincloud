@@ -1,0 +1,65 @@
+# In your repo root:
+mkdir -p ui/src netlify/functions
+
+# Add the React files to ui/src/
+# (App.jsx, App.css, main.jsx from above)
+
+# Add chat.js to netlify/functions/
+# (from above)
+
+# Create ui/package.json:
+cat > ui/package.json << 'EOF'
+{
+  "name": "raincloud-ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lucide-react": "^0.263.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.2"
+  }
+}
+EOF
+
+# Create ui/vite.config.js:
+cat > ui/vite.config.js << 'EOF'
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+})
+EOF
+
+# Create ui/index.html:
+cat > ui/index.html << 'EOF'
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raincloud Board</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+EOF
+
+# Push to GitHub
+git add .
+git commit -m "Add React UI"
+git push
